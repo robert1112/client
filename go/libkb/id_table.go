@@ -377,7 +377,7 @@ func ParseWebServiceBinding(base GenericChainLink) (ret RemoteProofChainLink, e 
 	jw := base.GetPayloadJSON().AtKey("body").AtKey("service")
 
 	var sptf string
-	if s, ierr := jsonparser.GetString(base.packed, "proof_text_full"); ierr != nil {
+	if s, ierr := jsonparser.GetString(base.packed, "proof_text_full"); ierr == nil {
 		// TODO: add test that returning on err here is ok:
 		sptf = s
 	}

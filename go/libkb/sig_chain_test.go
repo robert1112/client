@@ -202,7 +202,9 @@ func doChainTest(t *testing.T, tc TestContext, testCase TestCase) {
 	}
 	for i := 0; i < chainLen; i++ {
 		linkBlob := inputBlob.AtKey("chain").AtIndex(i)
-		link, err := ImportLinkFromServer(tc.G, &sigchain, linkBlob, uid)
+		linkDat, err := linkBlob.Marshal()
+		require.NoError(t, err)
+		link, err := ImportLinkFromServer(tc.G, &sigchain, linkDat, uid)
 		if err != nil {
 			sigchainErr = err
 			break
