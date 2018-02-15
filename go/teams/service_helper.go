@@ -270,10 +270,13 @@ func ReAddMemberAfterReset(ctx context.Context, g *libkb.GlobalContext, teamID k
 		if err != nil {
 			return err
 		}
+		// Try crypto members and invites
 		existingUV, err := t.UserVersionByUID(ctx, uv.Uid)
 		if err != nil {
-			return libkb.NotFoundError{Msg: fmt.Sprintf("uid %s has never been a member of this team.",
-				username)}
+			if existingUV, err = t.InviteUserVersionByUID(ctx, uv.Uid); err != nil {
+				return libkb.NotFoundError{Msg: fmt.Sprintf("uid %s has never been a member of this team.",
+					username)}
+			}
 		}
 
 		if existingUV.EldestSeqno == uv.EldestSeqno {
@@ -284,7 +287,9 @@ func ReAddMemberAfterReset(ctx context.Context, g *libkb.GlobalContext, teamID k
 		}
 		existingRole, err := t.MemberRole(ctx, existingUV)
 		if err != nil {
-			return err
+			if existingRole, err = t.InviteMemberRole(ctx, existingUV); err != nil {
+				return err
+			}
 		}
 
 		_, err = AddMemberByID(ctx, g, teamID, username, existingRole)

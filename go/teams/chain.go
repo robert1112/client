@@ -102,6 +102,15 @@ func (t TeamSigChainState) GetLatestKBFSGeneration(appType keybase1.TeamApplicat
 	return info.LegacyGeneration, nil
 }
 
+func (t TeamSigChainState) GetInviteUserRole(user keybase1.UserVersion) (keybase1.TeamRole, error) {
+	for _, invite := range t.inner.ActiveInvites {
+		if uv, err := invite.KeybaseUserVersion(); err == nil && uv.Eq(user) {
+			return invite.Role, nil
+		}
+	}
+	return keybase1.TeamRole_NONE, fmt.Errorf("invite not found to find user role: %s", user)
+}
+
 func (t TeamSigChainState) GetUserRole(user keybase1.UserVersion) (keybase1.TeamRole, error) {
 	return t.getUserRole(user), nil
 }
@@ -249,6 +258,21 @@ func (t TeamSigChainState) GetUsersWithRoleOrAbove(role keybase1.TeamRole) (res 
 		}
 	}
 	return res, nil
+}
+
+func (t TeamSigChainState) GetLatestInviteUVWithUID(uid keybase1.UID) (res keybase1.UserVersion, err error) {
+	found := false
+	for _, invite := range t.inner.ActiveInvites {
+		if uv, err := invite.KeybaseUserVersion(); err == nil && uv.Uid.Equal(uid) &&
+			(!found || res.EldestSeqno < uv.EldestSeqno) {
+			res = uv
+			found = true
+		}
+	}
+	if !found {
+		return keybase1.UserVersion{}, errors.New("did not find user with given uid")
+	}
+	return res.DeepCopy(), nil
 }
 
 func (t TeamSigChainState) GetLatestUVWithUID(uid keybase1.UID) (res keybase1.UserVersion, err error) {

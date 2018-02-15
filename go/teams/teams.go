@@ -137,6 +137,10 @@ func (t *Team) MemberRole(ctx context.Context, uv keybase1.UserVersion) (keybase
 	return t.chain().GetUserRole(uv)
 }
 
+func (t *Team) InviteMemberRole(ctx context.Context, uv keybase1.UserVersion) (keybase1.TeamRole, error) {
+	return t.chain().GetInviteUserRole(uv)
+}
+
 func (t *Team) myRole(ctx context.Context) (keybase1.TeamRole, error) {
 	uv, err := t.currentUserUV(ctx)
 	if err != nil {
@@ -148,6 +152,10 @@ func (t *Team) myRole(ctx context.Context) (keybase1.TeamRole, error) {
 
 func (t *Team) UserVersionByUID(ctx context.Context, uid keybase1.UID) (keybase1.UserVersion, error) {
 	return t.chain().GetLatestUVWithUID(uid)
+}
+
+func (t *Team) InviteUserVersionByUID(ctx context.Context, uid keybase1.UID) (keybase1.UserVersion, error) {
+	return t.chain().GetLatestInviteUVWithUID(uid)
 }
 
 func (t *Team) UsersWithRole(role keybase1.TeamRole) ([]keybase1.UserVersion, error) {
