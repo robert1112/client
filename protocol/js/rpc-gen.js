@@ -3612,6 +3612,8 @@ export type TeamDebugRes = $ReadOnly<{chain: TeamSigChainState}>
 
 export type TeamDetails = $ReadOnly<{members: TeamMembersDetails, keyGeneration: PerTeamKeyGeneration, annotatedActiveInvites: {[key: string]: AnnotatedTeamInvite}, settings: TeamSettings, showcase: TeamShowcase}>
 
+export type TeamEkMetadata = $ReadOnly<{kid: KID, generation: Int, hashMeta: HashMeta}>
+
 export type TeamEncryptedKBFSKeyset = $ReadOnly<{v: Int, e: Bytes, n: Bytes}>
 
 export type TeamEncryptedKBFSKeysetHash = String
@@ -3892,6 +3894,8 @@ export type UnixTime = Long
 export type User = $ReadOnly<{uid: UID, username: String}>
 
 export type UserCard = $ReadOnly<{following: Int, followers: Int, uid: UID, fullName: String, location: String, bio: String, website: String, twitter: String, youFollowThem: Boolean, theyFollowYou: Boolean, teamShowcase?: ?Array<UserTeamShowcase>}>
+
+export type UserEkMetadata = $ReadOnly<{kid: KID, generation: Int, hashMeta: HashMeta}>
 
 export type UserGetUPAKRpcParam = $ReadOnly<{uid: UID, incomingCallMap?: IncomingCallMapType, waitingHandler?: WaitingHandlerType}>
 

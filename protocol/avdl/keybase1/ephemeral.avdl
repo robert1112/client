@@ -11,4 +11,22 @@ protocol ephemeral {
     @jsonkey("hash_meta")
     HashMeta hashMeta;
   }
+
+  record UserEkMetadata {
+    @jsonkey("user_ephemeral_dh_public")
+    KID kid;
+    @jsonkey("generation")
+    int generation;
+    @jsonkey("hash_meta")
+    HashMeta hashMeta;
+  }
+
+  record TeamEkMetadata {
+    @jsonkey("team_ephemeral_dh_public")
+    KID kid;
+    @jsonkey("generation")
+    int generation;
+    @jsonkey("hash_meta")
+    HashMeta hashMeta;
+  }
 }

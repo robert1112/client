@@ -27,6 +27,48 @@
           "jsonkey": "hash_meta"
         }
       ]
+    },
+    {
+      "type": "record",
+      "name": "UserEkMetadata",
+      "fields": [
+        {
+          "type": "KID",
+          "name": "kid",
+          "jsonkey": "user_ephemeral_dh_public"
+        },
+        {
+          "type": "int",
+          "name": "generation",
+          "jsonkey": "generation"
+        },
+        {
+          "type": "HashMeta",
+          "name": "hashMeta",
+          "jsonkey": "hash_meta"
+        }
+      ]
+    },
+    {
+      "type": "record",
+      "name": "TeamEkMetadata",
+      "fields": [
+        {
+          "type": "KID",
+          "name": "kid",
+          "jsonkey": "team_ephemeral_dh_public"
+        },
+        {
+          "type": "int",
+          "name": "generation",
+          "jsonkey": "generation"
+        },
+        {
+          "type": "HashMeta",
+          "name": "hashMeta",
+          "jsonkey": "hash_meta"
+        }
+      ]
     }
   ],
   "messages": {},

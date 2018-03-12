@@ -21,6 +21,34 @@ func (o DeviceEkMetadata) DeepCopy() DeviceEkMetadata {
 	}
 }
 
+type UserEkMetadata struct {
+	Kid        KID      `codec:"kid" json:"user_ephemeral_dh_public"`
+	Generation int      `codec:"generation" json:"generation"`
+	HashMeta   HashMeta `codec:"hashMeta" json:"hash_meta"`
+}
+
+func (o UserEkMetadata) DeepCopy() UserEkMetadata {
+	return UserEkMetadata{
+		Kid:        o.Kid.DeepCopy(),
+		Generation: o.Generation,
+		HashMeta:   o.HashMeta.DeepCopy(),
+	}
+}
+
+type TeamEkMetadata struct {
+	Kid        KID      `codec:"kid" json:"team_ephemeral_dh_public"`
+	Generation int      `codec:"generation" json:"generation"`
+	HashMeta   HashMeta `codec:"hashMeta" json:"hash_meta"`
+}
+
+func (o TeamEkMetadata) DeepCopy() TeamEkMetadata {
+	return TeamEkMetadata{
+		Kid:        o.Kid.DeepCopy(),
+		Generation: o.Generation,
+		HashMeta:   o.HashMeta.DeepCopy(),
+	}
+}
+
 type EphemeralInterface interface {
 }
 
