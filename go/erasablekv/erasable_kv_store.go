@@ -1,4 +1,4 @@
-package ephemeral
+package erasablekv
 
 import (
 	"fmt"
@@ -165,6 +165,8 @@ func (s *FileErasableKVStore) write(ctx context.Context, key string, data []byte
 	// remove the temp file if it still exists at the end of this function
 	defer libkb.ShredFile(tmp.Name())
 
+	SetDisableBackup(s.G(), tmp.Name())
+
 	if runtime.GOOS != "windows" {
 		// os.Fchmod not supported on windows
 		if err := tmp.Chmod(libkb.PermFile); err != nil {
@@ -192,6 +194,7 @@ func (s *FileErasableKVStore) write(ctx context.Context, key string, data []byte
 	if err := os.Rename(tmp.Name(), filepath); err != nil {
 		return err
 	}
+	SetDisableBackup(s.G(), filepath)
 
 	if runtime.GOOS != "windows" {
 		// os.Fchmod not supported on windows

@@ -8,6 +8,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/keybase/client/go/erasablekv"
 	"github.com/keybase/client/go/libkb"
 	keybase1 "github.com/keybase/client/go/protocol/keybase1"
 )
@@ -18,7 +19,7 @@ type DeviceEKStorage struct {
 	libkb.Contextified
 	sync.Mutex
 	indexOnce *sync.Once
-	storage   ErasableKVStore
+	storage   erasablekv.ErasableKVStore
 	cache     map[keybase1.EkGeneration]keybase1.DeviceEk
 	keyPrefix string
 }
